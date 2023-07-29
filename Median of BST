@@ -1,0 +1,28 @@
+void ino(struct Node *root,vector<int>&ans){
+    if(root==NULL){
+        return;
+    }
+    ino(root->left,ans);
+    ans.push_back(root->data);
+    ino(root->right,ans);
+}
+
+float findMedian(struct Node *root)
+{
+      //Code here
+      //inorder traversal of tree
+      vector<int>ans;
+      ino(root,ans);
+     
+      int si=ans.size();
+      if(si%2!=0){
+         float mm=ans[si/2];
+         return mm;
+        
+      }else if(si%2==0){
+         float mm=(ans[si/2]+ans[(si/2)-1])/2.0;
+        return mm;
+      }
+      
+      
+}
