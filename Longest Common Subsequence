@@ -1,0 +1,43 @@
+Problems
+Courses
+Jobs
+Events
+Upcoming
+POTD
+
+Refresh
+
+Time (IST)	Status	Lang	Test Cases	Code
+2023-08-12 10:28:42	Correct	cpp	1120 / 1120	View
+C++ (g++ 5.4)
+
+
+
+
+Custom Input
+fab
+
+
+class Solution
+{
+    public:
+   int longestSubsequence(int n, int a[])
+    {
+       vector<int>dp;
+       dp.push_back(a[0]);
+       for(int i=1;i<n;i++)
+       {
+           if(a[i]>dp[dp.size()-1])
+           {
+               dp.push_back(a[i]);
+           }
+           else
+           {
+               auto it=lower_bound(dp.begin(),dp.end(),a[i]);
+               int ind=distance(dp.begin(),it);
+               dp[ind]=a[i];
+           }
+       }
+       return dp.size();
+    }
+};
