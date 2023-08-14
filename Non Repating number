@@ -1,0 +1,21 @@
+class Solution
+{
+public:
+      vector<int> singleNumber(vector<int> nums) 
+    {
+        // Code here.
+        map<int,int>s;
+        for(auto i : nums)
+        {
+            s[i]++;
+        }
+        vector<int>v;
+        for(auto i : s)
+        {
+            if(i.second==1)
+            v.push_back(i.first);
+        }
+        return v;
+        // Code here.
+    }
+};
