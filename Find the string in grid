@@ -1,0 +1,61 @@
+class Solution {
+public:
+    int m, n;
+    // up up-right right down-right down-left left up-left
+    int directions[8][2] = {{-1, 0}, {-1, 1}, {0, 1}, {1, 1}, {1, 0}, {1, -1}, {0,-1}, {-1, -1}};
+    
+    bool solve(vector<vector<char>>&grid, string word, int i, int j, int k, int count)
+    {
+        if(count == word.size())
+        {
+            return true;
+        }
+        
+        if(grid[i][j] == word[count])
+        {
+            return solve(grid, word, i + directions[k][0], j + directions[k][1], k, count + 1);
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    bool isValid(int i, int j)
+    {
+        return (i >= 0 && i < m && j >=0 && j < n);
+    }
+    
+vector<vector<int>>searchWord(vector<vector<char>>grid, string word){
+    int size = word.size();
+    vector<vector<int>> ans;
+    
+    m = grid.size();
+    n = grid[0].size();
+    
+    for(int i=0; i<m; i++)
+    {
+        for(int j=0; j<n; j++)
+        {
+            if(grid[i][j] == word[0])
+            {
+                for(int k=0; k<8; k++)
+                {
+                    int direction_i = directions[k][0]; 
+                    int direction_j = directions[k][1];
+                    
+                    if((isValid((direction_i*(size-1) + i), (direction_j*(size-1) + j))) && solve(grid, word, i + direction_i, j + direction_j, k, 1))
+                    {
+                        ans.push_back({i, j});
+                        break;
+                    }
+                    
+                }
+            }
+        }
+    }
+    
+    return ans;
+    
+}
+};
