@@ -1,0 +1,47 @@
+// Function to insert a node in a BST.
+
+/*
+struct Node {
+    int data;
+    Node* left;
+    Node* right;
+
+    Node(int val) {
+        data = val;
+        left = right = NULL;
+    }
+};
+*/
+
+class Solution
+{
+    public:
+     Node* solveBST(Node* node, int data) {
+
+
+            if(node == NULL){
+                Node* curr = new Node(data) ;
+                return curr ;
+            }
+            
+            //if data is present return root node
+            if(node->data == data ) {
+                return node;
+            }
+            //if data is greater than root node then traverse left side
+            else if(node->data > data) {
+                node->left = insert(node->left, data);
+            }
+            // if data is smaller than root node then traverse right side
+            else{
+                node->right = insert(node->right, data) ;
+            }
+            
+            return node;
+    }
+    
+        Node* insert(Node* node, int data) {
+            return solveBST(node, data) ;
+    }
+
+};
