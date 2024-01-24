@@ -1,0 +1,48 @@
+bool isCyclic(int node, unordered_map<int, list<int>>& adj, vector<int>& parent, vector<bool>& vis) {
+        vis[node] = true;
+        
+        for(auto nbr: adj[node]) {
+            if(vis[nbr] && nbr != parent[node]) {
+                return true;
+            }
+            else if(!vis[nbr]) {
+                parent[nbr] = node;
+                bool ans = isCyclic(nbr, adj, parent, vis);
+                if(ans == true) {
+                    return true;
+                }
+            }
+        }
+        
+        return false;
+    }
+  
+    int isTree(int n, int m, vector<vector<int>> &edges) {
+        // code here
+        unordered_map<int, list<int>> adj;
+        
+        for(int i=0; i<m; i++) {
+            int u = edges[i][0];
+            int v = edges[i][1];
+            
+            adj[u].push_back(v);
+            adj[v].push_back(u);
+        }
+        
+        // now check for cycle;
+        vector<int> parent(n, -1);
+        vector<bool> vis(n, false);
+        
+        if(isCyclic(0, adj, parent, vis)) {
+            return 0;
+        }
+        
+        // check all the nodes are visited or not i.e. check whether the graph is connected or not
+        for(int i=0; i<n; i++) {
+            if(!vis[i]) {
+                return 0;
+            }
+        }
+        
+        return 1;
+    }
