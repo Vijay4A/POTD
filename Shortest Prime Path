@@ -1,0 +1,58 @@
+class Solution{  
+    public:
+ vector<int> prime;
+    int num1, num2;
+
+    int solve(int num1, int num2) {
+        if (num1 == num2) return 0;
+        fillPrime();
+
+        vector<bool> vis(10001, false);
+
+        queue<array<int, 2>> q;
+        q.push({num1, 0});
+
+        while (!q.empty()) {
+            array<int, 2> current = q.front();
+            q.pop();
+
+            int cur = current[0];
+            int step = current[1];
+
+            vis[cur] = true;
+
+            if (cur == num2) return step;
+
+            string s = to_string(cur);
+
+            for (int i = 0; i < 4; i++) {
+                for (char ch = '0'; ch <= '9'; ch++) {
+                    if (ch == s[i] || (ch == '0' && i == 0)) continue;
+
+                    string nxt = s;
+                    nxt[i] = ch;
+
+                    int nxtN = stoi(nxt);
+
+                    if (prime[nxtN] == 1 && !vis[nxtN]) {
+                        q.push({nxtN, step + 1});
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+
+    void fillPrime() {
+        prime = vector<int>(10001, 1);
+        prime[1] = 0;
+
+        for (int i = 2; i <= 9999; i++) {
+            if (prime[i] == 1) {
+                for (int j = 2; j * i <= 9999; j++) {
+                    prime[j * i] = 0;
+                }
+            }
+        }
+    }
+};
