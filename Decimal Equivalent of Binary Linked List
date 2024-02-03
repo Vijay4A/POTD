@@ -1,0 +1,44 @@
+/* Link list Node/
+struct Node
+{
+    bool data;   // NOTE data is bool
+    Node* next;
+    
+    Node(int x){
+        data = x;
+        next = NULL;
+    }
+    
+}; */
+
+class Solution
+{
+    public:
+        // Should return decimal equivalent modulo 1000000007 of binary linked list 
+        long long unsigned int decimalValue(Node *head)
+        {
+           // Your Code Here
+           Node*prev=NULL;
+        Node*curr=head;
+        Node*next=NULL;
+        while(curr!=NULL){
+            next=curr->next;
+            curr->next=prev;
+            prev=curr;
+            curr=next;
+        }
+        long MOD=1e9+7;
+        int i=1;
+        long long unsigned int ans=0;
+        while(prev!=NULL){
+            ans=ans+prev->data*i;
+            ans%=MOD;
+            i=(i*2)%MOD;
+            prev=prev->next;
+            
+        }
+        
+        return ans;
+        
+        }
+};
