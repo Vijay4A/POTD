@@ -1,0 +1,52 @@
+{
+	int data;
+	Node *left, *right;
+};*/
+
+class Solution
+{
+    public:
+    //Function to return count of nodes at a given distance from leaf nodes.
+    set<Node*>st;
+    vector<int> solve(Node* root, int k){
+        if(root->left == NULL && root->right == NULL){
+            if(k == 0){
+                st.insert(root);
+            }
+            return {0};
+        }
+        
+        vector<int>t1, t2;
+        
+        if(root->left)
+            t1 = solve(root->left, k);
+        if(root->right)
+            t2 = solve(root->right, k);
+        
+        vector<int>v;
+        for(auto it : t1){
+            v.push_back(it+1);
+        }
+        for(auto it : t2){
+            v.push_back(it+1);
+        }
+        
+        for(auto it : v){
+            if(it == k){
+                st.insert(root);
+                // cout<<root->data<<"*"<<it<<endl;
+            }
+        }
+
+        return v;
+        
+    }
+    int printKDistantfromLeaf(Node* root, int k)
+    {
+    	//Add your code here. 
+        solve(root, k);
+        // for(auto it : st)
+        //     cout<<it<<" ";
+        return st.size();
+    }
+};
