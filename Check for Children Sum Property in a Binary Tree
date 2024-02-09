@@ -1,0 +1,24 @@
+class Solution{
+    public:
+    //Function to check whether all nodes of a tree have the value 
+    //equal to the sum of their child nodes.
+    int isSumProperty(Node *root)
+    {
+     // Add your code here
+     queue<Node*> q;
+       q.push(root);
+       while(!q.empty()){
+           int size=q.size();
+           while(size--){
+               int sum=0;
+               auto q1=q.front();
+               q.pop();
+               if(!q1->left and !q1->right) continue;
+               if(q1->left) { sum+=q1->left->data; q.push(q1->left);}
+               if(q1->right) {sum+=q1->right->data; q.push(q1->right);}
+               if(sum!=q1->data) return 0;
+           }
+       }
+       return 1;
+    }
+};
