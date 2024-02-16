@@ -1,0 +1,34 @@
+/* Node of the binary search tree 
+class Node
+{
+public:
+    int data;
+    Node *left;
+    Node *right;
+    Node(int val)
+    {
+        data = val;
+        left = NULL;
+        right = NULL;
+    }
+};
+*/
+
+class Solution
+{
+public:
+ Node * prev = NULL;
+    Node *flattenBST(Node *root)
+    {
+        // code here
+         if(!root) return NULL;
+        flattenBST(root->right);
+        root->right = prev;
+        
+        prev = root;
+        flattenBST(root->left);
+        root->left = NULL;
+        
+        return prev;
+    }
+};
