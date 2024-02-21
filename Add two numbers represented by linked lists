@@ -1,0 +1,61 @@
+class Solution {
+public:
+    struct Node* rev(struct Node* list) {
+        if (list == NULL) return NULL;
+
+        struct Node* curr = list;
+        struct Node* forward = NULL;
+        struct Node* prev = NULL;
+
+        while (curr != NULL) {
+            forward = curr->next;
+            curr->next = prev;
+            prev = curr;
+            curr = forward;
+        }
+
+        return prev;
+    }
+
+    void inserttail(struct Node*& anshead, struct Node*& anstail, int digit) {
+        struct Node* temp = new Node(digit);
+
+        if (anshead == NULL) {
+            anshead = temp;
+            anstail = temp;
+        } else {
+            anstail->next = temp;
+            anstail = temp;
+        }
+    }
+
+    struct Node* add(struct Node* first, struct Node* second) {
+        int carry = 0;
+        struct Node* anshead = NULL;
+        struct Node* anstail = NULL;
+
+        while (first != NULL || second != NULL || carry != 0) {
+            int val1 = (first != NULL) ? first->data : 0;
+            int val2 = (second != NULL) ? second->data : 0;
+
+            int sum = val1 + val2 + carry;
+            int digit = sum % 10;
+            inserttail(anshead, anstail, digit);
+            carry = sum / 10;
+
+            if (first != NULL) { first = first->next; }
+            if (second != NULL) { second = second->next; }
+        }
+
+        return anshead;
+    }
+
+    struct Node* addTwoLists(struct Node* first, struct Node* second) {
+        first = rev(first);
+        second = rev(second);
+        struct Node* ans = add(first, second);
+        ans = rev(ans);
+
+        return ans;
+    }
+};
