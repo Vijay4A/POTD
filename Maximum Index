@@ -1,0 +1,38 @@
+class Solution{
+    public:
+        
+    // A[]: input array
+    // N: size of array
+    // Function to find the maximum index difference.
+           
+    // A[]: input array
+    // N: size of array
+    // Function to find the maximum index difference.
+    int maxIndexDiff(int a[], int n) 
+    { 
+        int preSum[n]; // min
+        int suffSum[n]; // max
+        
+        preSum[0] = a[0];
+        suffSum[n-1] = a[n-1];
+        
+        for(int i = 1; i < n; i++){
+            preSum[i] = min(a[i], preSum[i-1]);
+            suffSum[n-i-1] = max(suffSum[n-i], a[n-i-1]);
+        }
+        
+        int i, j, ans;
+        i = j = ans = 0;
+        
+        while(j < n){
+            if(preSum[i] <= suffSum[j]){
+                ans = max(j-i, ans);
+                j++;
+            }else{
+                i++;
+            }
+        }
+        
+        return ans;
+    }
+};
