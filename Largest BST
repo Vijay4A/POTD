@@ -1,0 +1,47 @@
+class Solution{
+    public:
+    /*You are required to complete this method */
+    // Return the size of the largest sub-tree which is also a BST
+    void count(Node* root, int& cnt)
+    {
+        if(root == NULL) return;
+
+        cnt++;
+        count(root -> left, cnt);
+        count(root -> right, cnt);
+    }
+    
+    bool isBst(Node* root, int mini, int maxi)
+    {
+        if(root == NULL) return true;
+        
+        if(root -> data <= mini || root -> data >= maxi) return false;
+        
+        return isBst(root -> left, mini, root -> data) && isBst(root -> right, root -> data, maxi);
+    }
+    
+    void f(Node* root, int& ans)
+    {
+        if(root == NULL) return;
+        
+        f(root -> left, ans);
+        
+        if(isBst(root, INT_MIN, INT_MAX))
+        {
+            int cnt = 0;
+            count(root, cnt);
+            ans = max(ans, cnt);
+        }
+        
+        f(root -> right, ans);
+    }
+    
+    int largestBst(Node *root)
+    {
+        int ans = INT_MIN;
+        f(root, ans);
+        
+        if(ans == INT_MIN) return 1;
+        return ans;
+    }
+};
