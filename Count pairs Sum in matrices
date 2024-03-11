@@ -1,0 +1,39 @@
+class Solution{
+public:	
+	
+	int countPairs(vector<vector<int>> &mat1, vector<vector<int>> &mat2, int n, int x)
+	{
+	    // Your code goes here
+	     vector<int> ans1;
+        vector<int> ans2;
+     
+           for(int i = 0; i < mat1.size(); i++) {
+            for(int j = 0; j < mat1[0].size(); j++) {
+                ans1.push_back(mat1[i][j]);
+            }
+        }
+
+        // Adding elements from mat2 to ans
+        for(int i = 0; i < mat2.size(); i++) {
+            for(int j = 0; j < mat2[0].size(); j++) {
+                ans2.push_back(mat2[i][j]);
+            }
+        }
+        
+        int count=0;
+        int j=ans2.size()-1;
+   
+       for(int i=0;i<ans1.size();i++){
+           while(j>=0&& ans1[i]+ans2[j]>x){
+               j--;
+           }
+           if(j<0){
+               break;
+           }
+           if(ans1[i]+ans2[j]==x){
+               count++;
+           }
+       }
+        return count;
+	}
+};
