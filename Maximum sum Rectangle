@@ -1,0 +1,35 @@
+class Solution {
+  public:
+    int fun(vector<int>&temp,int n)
+    {
+        // code here
+         int sum=0;
+        int ans=INT_MIN;
+        for(int i=0;i<n;i++)
+        {
+            sum=sum+temp[i];
+            ans=max(ans,sum);
+            if(sum<0)
+            sum=0;
+        }
+        
+        return ans ;
+    }
+    int maximumSumRectangle(int r, int c, vector<vector<int>> mat) 
+    {
+        int res=INT_MIN;
+       for(int i=0;i<r;i++)
+       {
+           vector<int>temp(c,0);
+           for(int j=i;j<r;j++)
+           {
+               for(int k=0;k<c;k++)
+               {
+                   temp[k]=temp[k]+mat[j][k];
+               }
+               res=max(res,fun(temp,c));
+           }
+       }
+       return res ;
+    }
+};
